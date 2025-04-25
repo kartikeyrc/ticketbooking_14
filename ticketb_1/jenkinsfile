@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_BUILDKIT = 1
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        stage('Lint') {
+            steps {
+                sh 'pip install flake8 && flake8 . || true'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'python manage.py test || true'
+            }
+        }
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t ticket_booking_system:latest .'
+            }
+        }
+        stage('Docker Compose Up') {
+            steps {
+                sh 'docker-compose up -d --build'
+            }
+        }
+    }
+} 

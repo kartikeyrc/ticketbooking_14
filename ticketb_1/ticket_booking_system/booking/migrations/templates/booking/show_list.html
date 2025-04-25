@@ -1,0 +1,10 @@
+<h2>Available Shows</h2>
+{% for show in shows %}
+  <div>
+    <h3>{{ show.title }}</h3>
+    <p>{{ show.description }}</p>
+    <p>{{ show.date }} {{ show.time }} - Available: {{ show.available_seats }}</p>
+    <a href="{% url 'book_ticket' show.id %}">Book</a>
+  </div>
+{% endfor %}
+<a href="{% url 'logout' %}">Logout</a>

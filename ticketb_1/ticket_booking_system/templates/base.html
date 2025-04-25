@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Booking System</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #e9eef3; color: #1a2330; margin: 0; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem; background: #fff; border: 2px solid #3a5ca8; box-shadow: 0 0 0 2px #b3c6e0 inset; }
+        header { border-bottom: 2px solid #3a5ca8; background: #f4f8ff; }
+        nav { border-bottom: 2px solid #b3c6e0; padding: 1rem 0 0.5rem 0; background: #e0e8f7; }
+        nav a { margin-right: 1rem; text-decoration: none; color: #1a2330; font-weight: bold; border: 1px solid #3a5ca8; padding: 0.2em 0.7em; background: #f4f8ff; }
+        nav a:hover { background: #dbe6fa; }
+        .bare-list { list-style: none; padding: 0; }
+        .bare-list li { margin-bottom: 1rem; border: 1px solid #3a5ca8; padding: 1rem; background: #f7faff; }
+        .btn { display: inline-block; padding: 0.3em 1em; background: #e0e8f7; border: 1px solid #3a5ca8; color: #1a2330; text-decoration: none; cursor: pointer; font-weight: bold; }
+        .btn:active { background: #b3c6e0; }
+        .alert { background: #ffe0e0; color: #a00; padding: 0.5em; margin-bottom: 1em; border: 1px solid #fbb; }
+        footer { border-top: 2px solid #3a5ca8; background: #f4f8ff; padding: 1em 0; margin-top: 2em; }
+        .tile-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: flex-start; margin: 0; padding: 0; }
+        .tile { flex: 0 1 calc(48% - 1rem); border: 2px solid #3a5ca8; background: #f7faff; padding: 1.2rem; margin-bottom: 1rem; box-sizing: border-box; min-width: 250px; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'booking:booking_history' %}">My Bookings</a>
+                <a href="{% url 'booking:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'booking:login' %}">Login</a>
+                <a href="{% url 'booking:register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer style="text-align:center; color:#888; font-size:0.9em;">&copy; Ticket Booking System</footer>
+</body>
+</html> 

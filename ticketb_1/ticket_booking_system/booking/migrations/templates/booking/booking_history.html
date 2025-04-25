@@ -1,0 +1,4 @@
+<h2>Your Bookings</h2>
+{% for booking in bookings %}
+  <p>{{ booking.show.title }} - {{ booking.seats }} seat(s) on {{ booking.booking_date }}</p>
+{% endfor %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Available Movies</h2>
+<div class="tile-grid">
+    {% for show in shows %}
+    <div class="tile">
+        <strong>{{ show.title }}</strong><br>
+        <span>Date: {{ show.date|date:"Y-m-d H:i" }}</span><br>
+        <span>Available Seats: {{ show.available_seats }}</span><br>
+        <span>Price: ₹{{ show.price }}</span><br>
+        <form method="post" action="{% url 'booking:book_show' show.id %}" style="margin-top:0.5em;">
+            {% csrf_token %}
+            <input type="number" name="number_of_tickets" min="1" max="{{ show.available_seats }}" value="1" style="width:3em;" {% if show.available_seats == 0 %}disabled{% endif %}>
+            <button type="submit" class="btn" {% if show.available_seats == 0 %}disabled{% endif %}>Book Ticket</button>
+        </form>
+        {% if show.available_seats == 0 %}
+        <span style="color:#a00;">Sold Out</span>
+        {% endif %}
+    </div>
+    {% empty %}
+    <div class="tile">No movies available at the moment.</div>
+    {% endfor %}
+</div>
+{% endblock %} 

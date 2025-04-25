@@ -1,0 +1,5 @@
+<h2>Booking for {{ show.title }}</h2>
+<form method="post">{% csrf_token %}
+  <input name="seats" type="number" placeholder="No. of Seats">
+  <button type="submit">Confirm</button>
+</form>

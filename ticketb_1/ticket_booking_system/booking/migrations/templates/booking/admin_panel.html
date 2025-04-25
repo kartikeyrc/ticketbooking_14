@@ -1,0 +1,24 @@
+<h2>Admin Panel</h2>
+<form method="post">{% csrf_token %}
+  <input name="action" value="add" type="hidden">
+  <input name="title" placeholder="Title">
+  <input name="description" placeholder="Description">
+  <input name="date" type="date">
+  <input name="time" type="time">
+  <input name="seats" type="number" placeholder="Seats">
+  <button type="submit">Add Show</button>
+</form>
+
+<h3>Shows</h3>
+{% for show in shows %}
+  <p>{{ show.title }} <form method="post" style="display:inline;">{% csrf_token %}
+    <input type="hidden" name="action" value="delete">
+    <input type="hidden" name="show_id" value="{{ show.id }}">
+    <button type="submit">Delete</button>
+  </form></p>
+{% endfor %}
+
+<h3>All Bookings</h3>
+{% for booking in bookings %}
+  <p>{{ booking.user.username }} booked {{ booking.seats }} for {{ booking.show.title }}</p>
+{% endfor %}
